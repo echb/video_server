@@ -56,6 +56,6 @@ app.get("/video", function (req, res) {
 
 });
 
-app.listen(8000, function () {
-  console.log("Listening on port 8000!");
+app.listen(process.env.PORT, function () {
+  console.log(`Listening on port ${process.env.PORT}`);
 });
