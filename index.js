@@ -6,10 +6,12 @@ app.get("/", function (req, res) {
   res.send();
 });
 
-app.get("/video", function (req, res) {
+app.get("/video/:id", function (req, res) {
   // Ensure there is a range given for the video
   const range = req.headers.range;
-  const videoPath = "bigbuck.mp4";
+  let { id } = req.params;
+  const videoPath = `${id}.mp4`;
+  // console.log(req.params);
 
   if (!range) {
     const headers = {
@@ -26,7 +28,7 @@ app.get("/video", function (req, res) {
 
   } else {
     // get video stats (about 61MB)
-    const videoSize = fs.statSync("bigbuck.mp4").size;
+    const videoSize = fs.statSync(videoPath).size;
 
     // Parse Range
     // Example: "bytes=32324-"
@@ -56,6 +58,6 @@ app.get("/video", function (req, res) {
 
 });
 
-app.listen(process.env.PORT, function () {
-  console.log(`Listening on port ${process.env.PORT}`);
+app.listen(process.env.PORT || 5000, function () {
+  console.log(`Listening on port ${process.env.PORT || 5000}`);
 });
